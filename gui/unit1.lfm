@@ -1,0 +1,36 @@
+object Form1: TForm1
+  Left = 534
+  Height = 342
+  Top = 179
+  Width = 501
+  Caption = 'Form1'
+  ClientHeight = 342
+  ClientWidth = 501
+  LCLVersion = '2.0.4.0'
+  object Button1: TButton
+    Left = 8
+    Height = 25
+    Top = 0
+    Width = 75
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object StringGrid1: TStringGrid
+    Left = 16
+    Height = 284
+    Top = 32
+    Width = 464
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 96
+    Height = 25
+    Top = 0
+    Width = 75
+    Caption = 'Button2'
+    OnClick = Button2Click
+    TabOrder = 2
+  end
+end
