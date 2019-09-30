@@ -8,7 +8,7 @@ def xml(db):
     out += '<cells cellcount="CELLCOUNT">'
 
     cellcount = 0
-    columncount = 0
+    columncount = 1
     rowcount = 0
     for cell in db:
         rowcount = 0
@@ -25,6 +25,8 @@ def xml(db):
     out = out.replace('CELLCOUNT',str(cellcount))
     return out
 
+#print(xml({'':[''],'тест':['хуест'],'тест2':['','выебал бы мишу']}))
+
 sock = socket.socket()
 sock.bind(('',6089))
 sock.listen()
@@ -35,9 +37,11 @@ while True:
         while True:
             out = ''
             data = conn.recv(1024).decode()
+            data = data.replace('\n\r\n','').replace('    ','\t\t')
+            if data == '':
+                conn.close()
             if data != '': 
-
-                if data == 'exit':
+                if '!exit' in data:
                     conn.close()
                     print(addr,'отключился')
                 
@@ -47,13 +51,15 @@ while True:
                     data = 'def func():\n\t'+data 
                     exec(data)
                     out = str(func())
+                    print(out)
                     conn.send(out.encode())
                 except Exception as error:
                     if 'Bad' in traceback.format_exc():
                         continue
                     print('Произошла ошибка:',traceback.format_exc())
+                    conn.close()
                     conn.send(traceback.format_exc().encode())
-
+        
 
             
             
