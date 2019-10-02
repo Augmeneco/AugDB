@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import socket, os, sys, pickle, json, re, traceback, time, base64, sqlite3
+import socket, os, sys, pickle, json, re, traceback, time, base64, sqlite3, xmltodict
 
 basedata = pickle.load(open('basedata.augdb','rb'))
 
@@ -21,7 +21,7 @@ class convert:
         return out
 
 
-def xml(db):
+def toxml(db):
     out = '<?xml version="1.0" encoding="UTF-8"?><CONFIG><grid version="3"><saveoptions create="False" position="False" content="True"/><content>'
     out += '<cells cellcount="CELLCOUNT">'
 
@@ -61,12 +61,36 @@ while True:
         print('Connected',addr)
         while True:
             out = ''
-            data = base64.b64decode(conn.recv(1024)).decode()
-            data = data.replace('\n\r\n','').replace('    ','\t\t').replace('\n','\n\t')
+            data = ''.encode()
+            while True:
+                data_chunk = conn.recv(1024)                
+                if data_chunk == ''.encode(): break
+                data += data_chunk
+                if '//end'.encode() in data_chunk: break
 
+            data = data.replace(b'//end',b'')
+            data = base64.b64decode(data).decode()
+            data = data.replace('\n\r\n','').replace('    ','\t\t').replace('\n','\n\t')
             if data == '':
                 conn.close()
                 break
+
+            if '<?xml version="1.0" encoding="UTF-8"?>' in data:
+                data = data.replace('<?xml version="1.0" encoding="UTF-8"?>','')
+                data = json.loads(json.dumps(xmltodict.parse(data)))['CONFIG']['grid']['content']['cells']
+
+                bd = {}
+                for cell in data:
+                    if cell == '@cellcount': continue
+                    if data[cell]['@row'] == '0':
+                        bd[data[cell]['@text']] = []
+                        continue
+                    
+                    bd[ list(bd.keys())[int(data[cell]['@column'])-1] ].append(data[cell]['@text'])
+
+                basedata = bd
+                pickle.dump(basedata,open('basedata.augdb','wb'))
+                continue
 
             try:
                 data = 'def func():\n\t'+data 

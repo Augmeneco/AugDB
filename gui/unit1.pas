@@ -16,6 +16,7 @@ type
     Button1: TButton;
     Button2: TButton;
     Button3: TButton;
+    Button4: TButton;
     IdIOHandlerStack1: TIdIOHandlerStack;
     IdTCPClient1: TIdTCPClient;
     Memo1: TMemo;
@@ -27,6 +28,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
+    procedure Button4Click(Sender: TObject);
     procedure DrawGrid1Click(Sender: TObject);
     procedure Edit1Change(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -85,7 +87,7 @@ begin
   IdTCPClient1.Host:='127.0.0.1';
   IdTCPClient1.Connect;
 
-  IdTCPClient1.Socket.Write(EncodeStringBase64(SynEdit1.Text));
+  IdTCPClient1.Socket.Write(EncodeStringBase64(SynEdit1.Text)+'//end');
   out := '';
   while true do begin
     tmp := IdTCPClient1.Socket.ReadLn;
@@ -100,12 +102,29 @@ begin
   if pos('<?xml version="1.0" encoding="UTF-8"?>',out) > 0 then begin
     stream := TStringStream.Create(out);
     StringGrid1.LoadFromStream(stream);
+    stream.Free;
   end;
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
   StringGrid1.LoadFromFile('db2');
+end;
+
+procedure TForm1.Button4Click(Sender: TObject);
+begin
+  stream := TStringStream.Create('');
+  StringGrid1.SaveToStream(stream);
+
+  IdTCPClient1.Port:=6089;
+  IdTCPClient1.Host:='127.0.0.1';
+  IdTCPClient1.Connect;
+
+  IdTCPClient1.Socket.Write(EncodeStringBase64( stream.DataString ) );
+
+  IdTCPClient1.Disconnect;
+
+  stream.Free;
 end;
 
 end.

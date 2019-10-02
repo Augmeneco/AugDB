@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><CONFIG><grid version="3"><saveoptions create="False" position="False" content="True"/><content><cells cellcount="7"><cell1 column="1" row="0" text=""/><cell2 column="1" row="1" text=""/><cell3 column="2" row="0" text="тест"/><cell4 column="2" row="1" text="хуест"/><cell5 column="3" row="0" text="тест2"/><cell6 column="3" row="1" text=""/><cell7 column="3" row="2" text="выебал бы мишу"/></cells></content></grid></CONFIG>
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <grid version="3">
+    <saveoptions create="False" position="False" content="True"/>
+    <content>
+      <cells cellcount="4">
+        <cell1 column="1" row="1" text="&amp;"/>
+        <cell2 column="2" row="1" text="'"/>
+        <cell3 column="3" row="1" text="&lt;"/>
+        <cell4 column="4" row="1" text=">"/>
+      </cells>
+    </content>
+  </grid>
+</CONFIG>

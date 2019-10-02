@@ -15,14 +15,13 @@ object Form1: TForm1
     Width = 688
     Align = alBottom
     Anchors = [akTop, akLeft, akRight, akBottom]
-    AutoFillColumns = True
     ColCount = 1
     Flat = True
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goRowMoving, goColMoving, goEditing, goTabs, goColSpanning, goSmoothScroll, goFixedRowNumbering, goFixedColSizing, goCellHints, goCellEllipsis]
     RowCount = 1
     TabOrder = 0
     ColWidths = (
-      44
+      58
     )
   end
   object Button3: TButton
@@ -596,6 +595,15 @@ object Form1: TForm1
     Anchors = [akTop, akLeft, akBottom]
     Beveled = True
     ParentColor = False
+  end
+  object Button4: TButton
+    Left = 93
+    Height = 25
+    Top = 40
+    Width = 75
+    Caption = 'Сохранить'
+    OnClick = Button4Click
+    TabOrder = 8
   end
   object SynPythonSyn1: TSynPythonSyn
     DefaultFilter = 'Файлы Python (*.py)|*.py'
