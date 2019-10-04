@@ -9,39 +9,50 @@ def chunks(l, n):
 
 class convert:
     def sqlite(db,table):
-        out = {}
+        answ = {}
         db = sqlite3.connect(db).cursor().execute('SELECT * FROM '+table)
         columns = [columns[0] for columns in db.description]
         rows = db.fetchall()
         for row in rows:
             for k in range(len(columns)):
-                if columns[k] not in out:
-                    out[columns[k]] = []
-                out[columns[k]].append(row[k])
-        return out
+                if columns[k] not in answ:
+                    answ[columns[k]] = []
+                answ[columns[k]].append(row[k])
+        return answ
 
+class table:
+    def fetch(db,column,condition):
+        answ = {}
+        for i in range(len(db[column])):
+            cont = [False]
+            exec('if db[\''+column+'\']['+str(i)+'] '+condition+': cont[0] = True')
+            if cont[0]:
+                for col in db:
+                    if col not in answ: answ[col] = []
+                    answ[col].append(db[col][i])
+        return answ
 
 def toxml(db):
-    out = '<?xml version="1.0" encoding="UTF-8"?><CONFIG><grid version="3"><saveoptions create="False" position="False" content="True"/><content>'
-    out += '<cells cellcount="CELLCOUNT">'
+    answ = '<?xml version="1.0" encoding="UTF-8"?><CONFIG><grid version="3"><saveoptions create="False" position="False" content="True"/><content>'
+    answ += '<cells cellcount="CELLCOUNT">'
 
     cellcount = 0
     columncount = 1
     rowcount = 0
     for cell in db:
         rowcount = 0
-        out += '<cell'+str(cellcount+1)+' column="'+str(columncount)+'" row="'+str(rowcount)+'" text="'+cell+'"/>'
+        answ += '<cell'+str(cellcount+1)+' column="'+str(columncount)+'" row="'+str(rowcount)+'" text="'+cell+'"/>'
         cellcount += 1
         rowcount += 1
         for row in db[cell]:            
-            out += '<cell'+str(cellcount+1)+' column="'+str(columncount)+'" row="'+str(rowcount)+'" text="'+str(row)+'"/>'
+            answ += '<cell'+str(cellcount+1)+' column="'+str(columncount)+'" row="'+str(rowcount)+'" text="'+str(row)+'"/>'
             cellcount += 1
             rowcount += 1
             
         columncount += 1
-    out += '</cells></content></grid></CONFIG>'
-    out = out.replace('CELLCOUNT',str(cellcount))
-    return out
+    answ += '</cells></content></grid></CONFIG>'
+    answ = answ.replace('CELLCOUNT',str(cellcount))
+    return answ
 
 def send(text,conn):
     text = text.replace('&','')
@@ -60,7 +71,7 @@ while True:
         conn, addr = sock.accept()
         print('Connected',addr)
         while True:
-            out = ''
+            answ = ''
             data = ''.encode()
             while True:
                 data_chunk = conn.recv(1024)                
@@ -95,9 +106,9 @@ while True:
             try:
                 data = 'def func():\n\t'+data 
                 exec(data)
-                out = str(func())
-                open('log.log','w').write(out)
-                send(out,conn)
+                answ = str(func())
+                open('log.log','w').write(answ)
+                send(answ,conn)
                 print('отправленно')
                     
             except Exception as error:
