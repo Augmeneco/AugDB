@@ -1,46 +1,113 @@
 object Form1: TForm1
-  Left = 192
-  Height = 553
-  Top = 154
-  Width = 854
+  Left = 330
+  Height = 454
+  Top = 133
+  Width = 734
   Caption = 'Form1'
-  ClientHeight = 553
-  ClientWidth = 854
+  ClientHeight = 433
+  ClientWidth = 734
+  Menu = MainMenu1
+  OnCreate = FormCreate
   LCLVersion = '2.0.4.0'
   object PageControl1: TPageControl
     Left = 0
-    Height = 112
+    Height = 88
     Top = 0
-    Width = 854
-    ActivePage = bd_main
+    Width = 734
+    ActivePage = bd_edit
     Align = alTop
-    TabIndex = 0
+    TabIndex = 1
     TabOrder = 0
     object bd_main: TTabSheet
       Caption = 'Главная'
-      OnContextPopup = bd_mainContextPopup
+      ClientHeight = 53
+      ClientWidth = 728
+      object Memo1: TMemo
+        Left = 480
+        Height = 53
+        Top = 0
+        Width = 248
+        Align = alRight
+        Lines.Strings = (
+          'Memo1'
+        )
+        ScrollBars = ssAutoVertical
+        TabOrder = 0
+        WantTabs = True
+      end
+      object Button1: TButton
+        AnchorSideRight.Control = Memo1
+        Left = 394
+        Height = 25
+        Top = 28
+        Width = 86
+        Anchors = [akTop, akRight]
+        Caption = 'Выполнить'
+        OnClick = Button1Click
+        TabOrder = 1
+      end
     end
     object bd_edit: TTabSheet
-      Caption = 'Работа с БД'
+      Caption = 'Работа с таблицей'
     end
     object bd_create: TTabSheet
       Caption = 'Создание'
     end
   end
-  object StringGrid1: TStringGrid
-    Left = 0
-    Height = 408
-    Top = 112
-    Width = 854
-    Align = alClient
-    TabOrder = 1
-  end
   object Panel1: TPanel
     Left = 0
     Height = 33
-    Top = 520
-    Width = 854
+    Top = 400
+    Width = 734
     Align = alBottom
+    TabOrder = 1
+  end
+  object PageControl2: TPageControl
+    Left = 0
+    Height = 312
+    Top = 88
+    Width = 734
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
     TabOrder = 2
+    Options = [nboShowAddTabButton]
+    object TabSheet1: TTabSheet
+      Caption = 'таблица1'
+      ClientHeight = 277
+      ClientWidth = 728
+      object StringGrid1: TStringGrid
+        Left = 0
+        Height = 277
+        Top = 0
+        Width = 728
+        Align = alClient
+        ColCount = 1
+        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goRowMoving, goColMoving, goEditing, goAutoAddRows, goTabs, goSmoothScroll, goFixedRowNumbering]
+        RowCount = 1
+        TabOrder = 0
+      end
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 768
+    top = 40
+    object MenuItem1: TMenuItem
+      Caption = 'Файл'
+      object menu_save: TMenuItem
+        Caption = 'Сохранить'
+        OnClick = menu_saveClick
+      end
+      object menu_load: TMenuItem
+        Caption = 'Загрузить'
+      end
+      object menu_close: TMenuItem
+        Caption = 'Открыть'
+      end
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    left = 672
+    top = 80
   end
 end
