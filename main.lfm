@@ -1,33 +1,33 @@
 object Form1: TForm1
-  Left = 330
-  Height = 454
-  Top = 133
-  Width = 734
+  Left = 284
+  Height = 337
+  Top = 170
+  Width = 674
   Caption = 'Form1'
-  ClientHeight = 433
-  ClientWidth = 734
+  ClientHeight = 316
+  ClientWidth = 674
   Menu = MainMenu1
   OnCreate = FormCreate
   LCLVersion = '2.0.4.0'
   object PageControl1: TPageControl
     Left = 0
-    Height = 88
+    Height = 96
     Top = 0
-    Width = 734
+    Width = 674
     ActivePage = bd_edit
     Align = alTop
     TabIndex = 1
     TabOrder = 0
     object bd_main: TTabSheet
       Caption = 'Главная'
-      ClientHeight = 53
-      ClientWidth = 728
+      ClientHeight = 61
+      ClientWidth = 668
       object Memo1: TMemo
-        Left = 480
-        Height = 53
+        Left = 0
+        Height = 61
         Top = 0
         Width = 248
-        Align = alRight
+        Align = alLeft
         Lines.Strings = (
           'Memo1'
         )
@@ -36,12 +36,11 @@ object Form1: TForm1
         WantTabs = True
       end
       object Button1: TButton
-        AnchorSideRight.Control = Memo1
-        Left = 394
+        Left = 248
         Height = 25
-        Top = 28
+        Top = 34
         Width = 86
-        Anchors = [akTop, akRight]
+        Anchors = [akLeft]
         Caption = 'Выполнить'
         OnClick = Button1Click
         TabOrder = 1
@@ -49,6 +48,47 @@ object Form1: TForm1
     end
     object bd_edit: TTabSheet
       Caption = 'Работа с таблицей'
+      ClientHeight = 61
+      ClientWidth = 668
+      object select_table: TComboBox
+        Left = 0
+        Height = 29
+        Top = 0
+        Width = 132
+        ItemHeight = 0
+        OnChange = select_tableChange
+        ParentShowHint = False
+        Style = csOwnerDrawFixed
+        TabOrder = 0
+      end
+      object edit_col_name: TEdit
+        Left = 136
+        Height = 27
+        Top = 0
+        Width = 96
+        HelpType = htKeyword
+        HelpKeyword = 'имя ячейки'
+        TabOrder = 1
+        TextHint = 'имя ячейки'
+      end
+      object Button2: TButton
+        Left = 232
+        Height = 25
+        Top = 0
+        Width = 75
+        Caption = 'Добавить'
+        OnClick = Button2Click
+        TabOrder = 2
+      end
+      object Button3: TButton
+        Left = 136
+        Height = 25
+        Top = 32
+        Width = 171
+        Caption = 'Удалить последнюю'
+        OnClick = Button3Click
+        TabOrder = 3
+      end
     end
     object bd_create: TTabSheet
       Caption = 'Создание'
@@ -57,37 +97,21 @@ object Form1: TForm1
   object Panel1: TPanel
     Left = 0
     Height = 33
-    Top = 400
-    Width = 734
+    Top = 283
+    Width = 674
     Align = alBottom
     TabOrder = 1
   end
-  object PageControl2: TPageControl
+  object StringGrid1: TStringGrid
     Left = 0
-    Height = 312
-    Top = 88
-    Width = 734
-    ActivePage = TabSheet1
+    Height = 187
+    Top = 96
+    Width = 674
     Align = alClient
-    TabIndex = 0
+    ColCount = 1
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goRowMoving, goColMoving, goEditing, goAutoAddRows, goTabs, goSmoothScroll, goFixedRowNumbering]
+    RowCount = 1
     TabOrder = 2
-    Options = [nboShowAddTabButton]
-    object TabSheet1: TTabSheet
-      Caption = 'таблица1'
-      ClientHeight = 277
-      ClientWidth = 728
-      object StringGrid1: TStringGrid
-        Left = 0
-        Height = 277
-        Top = 0
-        Width = 728
-        Align = alClient
-        ColCount = 1
-        Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goRowMoving, goColMoving, goEditing, goAutoAddRows, goTabs, goSmoothScroll, goFixedRowNumbering]
-        RowCount = 1
-        TabOrder = 0
-      end
-    end
   end
   object MainMenu1: TMainMenu
     left = 768
