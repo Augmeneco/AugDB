@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<CONFIG>
-  <Compiler Value="/usr/bin/fpc" Date="1540814642"/>
-  <Params Value=" -MObjFPC -Scghi -Cg -O1 -g -gl -l -vewnhibq -Fi/home/cha14ka/git/AugDB/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.4/components/synedit/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.0.4/lcl/units/x86_64-linux/gtk2 -Fu/usr/share/lazarus/2.0.4/lcl/units/x86_64-linux -Fu/usr/share/lazarus/2.0.4/components/lazutils/lib/x86_64-linux -Fu/usr/share/lazarus/2.0.4/packager/units/x86_64-linux -Fu/home/cha14ka/git/AugDB/ -FU/home/cha14ka/git/AugDB/lib/x86_64-linux/ -FE/home/cha14ka/git/AugDB/ -o/home/cha14ka/git/AugDB/augdb -dLCL -dLCLgtk2 augdb.lpr"/>
-</CONFIG>
