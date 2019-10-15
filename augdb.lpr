@@ -1,4 +1,4 @@
-program main;
+program augdb;
 
 {$mode objfpc}{$H+}
 
@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, indylaz, Unit1, anchordockpkg
+  Forms, main
   { you can add units after this };
 
 {$R *.res}

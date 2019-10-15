@@ -1,0 +1,46 @@
+object Form1: TForm1
+  Left = 192
+  Height = 553
+  Top = 154
+  Width = 854
+  Caption = 'Form1'
+  ClientHeight = 553
+  ClientWidth = 854
+  LCLVersion = '2.0.4.0'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 112
+    Top = 0
+    Width = 854
+    ActivePage = bd_main
+    Align = alTop
+    TabIndex = 0
+    TabOrder = 0
+    object bd_main: TTabSheet
+      Caption = 'Главная'
+      OnContextPopup = bd_mainContextPopup
+    end
+    object bd_edit: TTabSheet
+      Caption = 'Работа с БД'
+    end
+    object bd_create: TTabSheet
+      Caption = 'Создание'
+    end
+  end
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 408
+    Top = 112
+    Width = 854
+    Align = alClient
+    TabOrder = 1
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 33
+    Top = 520
+    Width = 854
+    Align = alBottom
+    TabOrder = 2
+  end
+end
