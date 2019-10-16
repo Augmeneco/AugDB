@@ -15,9 +15,20 @@ type
 
   TForm1 = class(TForm)
     Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
+    add_col: TButton;
+    new_table_make_bt: TButton;
+    new_table_close_bt: TButton;
+    delete_last: TButton;
+    add_table: TButton;
+    delete_table: TButton;
+    Label3: TLabel;
+    new_table_rows_count: TEdit;
+    new_table_name: TEdit;
+    new_table_cols_name: TEdit;
     edit_col_name: TEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    table_create_opt: TPanel;
     select_table: TComboBox;
     menu_close: TMenuItem;
     menu_load: TMenuItem;
@@ -34,11 +45,13 @@ type
     menu_save: TMenuItem;
     SaveDialog1: TSaveDialog;
     StringGrid1: TStringGrid;
+    procedure add_tableClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    procedure add_colClick(Sender: TObject);
+    procedure delete_lastClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure menu_saveClick(Sender: TObject);
+    procedure new_table_make_btClick(Sender: TObject);
     procedure select_tableChange(Sender: TObject);
   private
 
@@ -65,6 +78,7 @@ var
   bd_id: integer;
   json1,json2: TJSONObject;
   json3: TJSONArray;
+  filename: TFileStream;
 begin
   Form1.SaveDialog1.Title:='Сохранение базы данных';
   Form1.SaveDialog1.InitialDir := GetCurrentDir;
@@ -78,18 +92,20 @@ begin
   for bd_id:=0 to Form1.select_table.Items.Count-1 do
   begin
     json2 := TJSONObject.Create;
-    for col:=1 to gridslist[bd_id].ColCount-1 do
+    for col:=1 to Form1.StringGrid1.ColCount-1 do
     begin
       json3 := TJSONArray.Create;
-      for row:=1 to gridslist[bd_id].RowCount-1 do
+      for row:=1 to Form1.StringGrid1.RowCount-1 do
       begin
-        json3.Add(gridslist[bd_id].Cells[col,row]);
+        json3.Add(Form1.StringGrid1.Cells[col,row]);
       end;
-      json2.Add(gridslist[bd_id].Cells[col,0],json3);
+      json2.Add(Form1.StringGrid1.Cells[col,0],json3);
     end;
     json1.Objects[gridsnames[bd_id]] := json2;
   end;
-  writeln(json1.FormatJSON);
+  filename := TFileStream.Create(Form1.SaveDialog1.FileName,fmOpenWrite or fmCreate);
+  filename.Write(json1.FormatJSON[1],Length(json1.AsString));
+  filename.Free;
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
@@ -97,13 +113,19 @@ begin
   select_table.Items.Add('таблица'+inttostr(select_table.Items.Count));
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.add_tableClick(Sender: TObject);
+begin
+  table_create_opt.Show;
+
+end;
+
+procedure TForm1.add_colClick(Sender: TObject);
 begin
   StringGrid1.ColCount:=StringGrid1.ColCount+1;
   StringGrid1.Cells[StringGrid1.ColCount-1,0] := edit_col_name.Caption;
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.delete_lastClick(Sender: TObject);
 begin
   StringGrid1.ColCount:=StringGrid1.ColCount-1;
 end;
@@ -115,15 +137,27 @@ begin
   StringGrid1.RowCount:=2;
   SetLength(gridslist,1);
   SetLength(gridsnames,1);
-  gridslist[0] := StringGrid1;
   gridsnames[0] := 'таблица1';
   select_table.Items.Add('таблица1');
   select_table.ItemIndex:=0;
+  table_create_opt.Width:=210;
+  table_create_opt.Height:=192;
+  table_create_opt.Left:=0;
+  table_create_opt.Top:=96;
 end;
 
 procedure TForm1.menu_saveClick(Sender: TObject);
 begin
   savebd();
+end;
+
+procedure TForm1.new_table_make_btClick(Sender: TObject);
+begin
+  SetLength(gridsnames,2);
+  gridsnames[Length(gridsnames)] := new_table_name.Text;
+  select_table.Items.Add(new_table_name.Text);
+  select_table.ItemIndex:=select_table.Items.Count-1;
+  table_create_opt.Hide;
 end;
 
 procedure TForm1.select_tableChange(Sender: TObject);
