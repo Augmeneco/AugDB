@@ -51,6 +51,7 @@ type
     procedure delete_lastClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure menu_saveClick(Sender: TObject);
+    procedure new_table_close_btClick(Sender: TObject);
     procedure new_table_make_btClick(Sender: TObject);
     procedure select_tableChange(Sender: TObject);
   private
@@ -144,6 +145,7 @@ begin
   table_create_opt.Height:=192;
   table_create_opt.Left:=0;
   table_create_opt.Top:=96;
+  table_create_opt.Hide;
 end;
 
 procedure TForm1.menu_saveClick(Sender: TObject);
@@ -151,12 +153,25 @@ begin
   savebd();
 end;
 
-procedure TForm1.new_table_make_btClick(Sender: TObject);
+procedure TForm1.new_table_close_btClick(Sender: TObject);
 begin
-  SetLength(gridsnames,2);
+  table_create_opt.Hide;
+end;
+
+procedure TForm1.new_table_make_btClick(Sender: TObject);
+var
+  colname: string;
+  i: integer;
+begin
+  SetLength(gridsnames,Length(gridsnames)+1);
   gridsnames[Length(gridsnames)] := new_table_name.Text;
   select_table.Items.Add(new_table_name.Text);
   select_table.ItemIndex:=select_table.Items.Count-1;
+  colname := new_table_cols_name.Text.split([',']);
+  for i:=1 to Length(colname) do
+  begin
+    StringGrid1.Cells[i,0] := colname[i+1];
+  end;
   table_create_opt.Hide;
 end;
 

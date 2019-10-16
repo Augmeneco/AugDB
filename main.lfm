@@ -90,10 +90,10 @@ object Form1: TForm1
         TabOrder = 3
       end
       object add_table: TButton
-        Left = -3
+        Left = 0
         Height = 25
         Top = 32
-        Width = 75
+        Width = 72
         Caption = 'add_table'
         OnClick = add_tableClick
         TabOrder = 4
@@ -131,12 +131,12 @@ object Form1: TForm1
     TabOrder = 2
   end
   object table_create_opt: TPanel
-    Left = 512
-    Height = 16
-    Top = 136
-    Width = 16
-    ClientHeight = 16
-    ClientWidth = 16
+    Left = 352
+    Height = 216
+    Top = 112
+    Width = 264
+    ClientHeight = 216
+    ClientWidth = 264
     TabOrder = 3
     object Label1: TLabel
       Left = 3
@@ -160,7 +160,7 @@ object Form1: TForm1
       Top = 64
       Width = 208
       TabOrder = 1
-      TextHint = 'Имя таблицы'
+      TextHint = 'Имена ячеек'
     end
     object Label2: TLabel
       Left = 0
@@ -177,7 +177,7 @@ object Form1: TForm1
       Width = 208
       NumbersOnly = True
       TabOrder = 2
-      TextHint = 'Имя таблицы'
+      TextHint = 'Кол-во строк'
     end
     object Label3: TLabel
       Left = 3
@@ -202,6 +202,7 @@ object Form1: TForm1
       Top = 160
       Width = 75
       Caption = 'Закрыть'
+      OnClick = new_table_close_btClick
       TabOrder = 4
     end
   end
