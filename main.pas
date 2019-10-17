@@ -62,7 +62,7 @@ type
 
 var
   Form1: TForm1;
-  basedata: array of array of string;
+  basedata: array of array of array of string;
   gridslist: array of TStringGrid;
   gridsnames: array of string;
   jsonobj: TJSONObject;
@@ -146,6 +146,7 @@ begin
   table_create_opt.Left:=0;
   table_create_opt.Top:=96;
   table_create_opt.Hide;
+  SetLength(basedata,1,0,2);
 end;
 
 procedure TForm1.menu_saveClick(Sender: TObject);
@@ -160,17 +161,23 @@ end;
 
 procedure TForm1.new_table_make_btClick(Sender: TObject);
 var
-  colname: string;
+  colname: TStringArray;
+  tmpstr: string;
+  tmplist: array of string;
   i: integer;
 begin
   SetLength(gridsnames,Length(gridsnames)+1);
   gridsnames[Length(gridsnames)] := new_table_name.Text;
   select_table.Items.Add(new_table_name.Text);
   select_table.ItemIndex:=select_table.Items.Count-1;
-  colname := new_table_cols_name.Text.split([',']);
+  tmpstr := new_table_cols_name.Text;
+  SetLength(tmplist,4);
+  tmplist[0]:=',';tmplist[1]:=', ';tmplist[2]:=' ,';tmplist[3]:=' , ';
+  colname := tmpstr.Split(tmplist);
+  StringGrid1.ColCount:=Length(colname)+1;
   for i:=1 to Length(colname) do
   begin
-    StringGrid1.Cells[i,0] := colname[i+1];
+    StringGrid1.Cells[i,0] := colname[i-1];
   end;
   table_create_opt.Hide;
 end;
