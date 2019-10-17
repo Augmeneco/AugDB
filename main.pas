@@ -74,7 +74,21 @@ implementation
 
 { TForm1 }
 
-procedure savebd();
+procedure savebdtoarray(tableid: integer);
+var
+  i: integer;
+  str: string;
+begin
+  for col:=1 to Form1.StringGrid1.ColCount-1 do
+  for row:=0 to Form1.StringGrid1.RowCount-1 do
+  begin
+    SetLength(basedata,Form1.select_table.Items.Count,1024,1024);
+    writeln(tableid,col,row,Form1.StringGrid1.Cells[col,row]);
+    basedata[tableid][col][row] := Form1.StringGrid1.Cells[col,row];
+  end;
+end;
+
+procedure savebdtofile();
 var
   bd_id: integer;
   json1,json2: TJSONObject;
@@ -146,12 +160,12 @@ begin
   table_create_opt.Left:=0;
   table_create_opt.Top:=96;
   table_create_opt.Hide;
-  SetLength(basedata,1,0,2);
+  SetLength(basedata,1,1024,1024);
 end;
 
 procedure TForm1.menu_saveClick(Sender: TObject);
 begin
-  savebd();
+  savebdtofile();
 end;
 
 procedure TForm1.new_table_close_btClick(Sender: TObject);
@@ -179,12 +193,13 @@ begin
   begin
     StringGrid1.Cells[i,0] := colname[i-1];
   end;
+  StringGrid1.RowCount:=strtoint(new_table_rows_count.Text);
   table_create_opt.Hide;
 end;
 
 procedure TForm1.select_tableChange(Sender: TObject);
 begin
-  ShowMessage(inttostr(select_table.ItemIndex));
+  savebdtoarray(select_table.ItemIndex);
 end;
 
 end.

@@ -3,6 +3,7 @@ object Form1: TForm1
   Height = 439
   Top = 152
   Width = 811
+  ActiveControl = PageControl1
   Caption = 'Form1'
   ClientHeight = 418
   ClientWidth = 811
