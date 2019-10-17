@@ -1,0 +1,232 @@
+object Form1: TForm1
+  Left = 332
+  Height = 439
+  Top = 152
+  Width = 811
+  ActiveControl = PageControl1
+  Caption = 'Form1'
+  ClientHeight = 418
+  ClientWidth = 811
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  LCLVersion = '2.0.4.0'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 96
+    Top = 0
+    Width = 811
+    ActivePage = bd_edit
+    Align = alTop
+    TabIndex = 1
+    TabOrder = 0
+    object bd_main: TTabSheet
+      Caption = 'Главная'
+      ClientHeight = 61
+      ClientWidth = 805
+      object Memo1: TMemo
+        Left = 0
+        Height = 61
+        Top = 0
+        Width = 248
+        Align = alLeft
+        Lines.Strings = (
+          'Memo1'
+        )
+        ScrollBars = ssAutoVertical
+        TabOrder = 0
+        WantTabs = True
+      end
+      object Button1: TButton
+        Left = 248
+        Height = 25
+        Top = 34
+        Width = 86
+        Anchors = [akLeft]
+        Caption = 'Выполнить'
+        OnClick = Button1Click
+        TabOrder = 1
+      end
+    end
+    object bd_edit: TTabSheet
+      Caption = 'Работа с таблицей'
+      ClientHeight = 61
+      ClientWidth = 805
+      object select_table: TComboBox
+        Left = 0
+        Height = 29
+        Top = 0
+        Width = 147
+        ItemHeight = 0
+        OnChange = select_tableChange
+        ParentShowHint = False
+        Style = csOwnerDrawFixed
+        TabOrder = 0
+      end
+      object edit_col_name: TEdit
+        Left = 152
+        Height = 27
+        Top = 0
+        Width = 96
+        HelpType = htKeyword
+        HelpKeyword = 'имя ячейки'
+        TabOrder = 1
+        TextHint = 'имя ячейки'
+      end
+      object add_col: TButton
+        Left = 248
+        Height = 25
+        Top = 0
+        Width = 75
+        Caption = 'Добавить'
+        OnClick = add_colClick
+        TabOrder = 2
+      end
+      object delete_last: TButton
+        Left = 152
+        Height = 25
+        Top = 32
+        Width = 168
+        Caption = 'Удалить последнюю'
+        OnClick = delete_lastClick
+        TabOrder = 3
+      end
+      object add_table: TButton
+        Left = 0
+        Height = 25
+        Top = 32
+        Width = 72
+        Caption = 'add_table'
+        OnClick = add_tableClick
+        TabOrder = 4
+      end
+      object delete_table: TButton
+        Left = 72
+        Height = 25
+        Top = 32
+        Width = 75
+        Caption = 'delete_table'
+        TabOrder = 5
+      end
+    end
+    object bd_create: TTabSheet
+      Caption = 'Создание'
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 33
+    Top = 385
+    Width = 811
+    Align = alBottom
+    TabOrder = 1
+  end
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 289
+    Top = 96
+    Width = 811
+    Align = alClient
+    ColCount = 1
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goRowMoving, goColMoving, goEditing, goAutoAddRows, goTabs, goSmoothScroll, goFixedRowNumbering]
+    RowCount = 1
+    TabOrder = 2
+    OnEnter = StringGrid1Enter
+  end
+  object table_create_opt: TPanel
+    Left = 408
+    Height = 216
+    Top = 112
+    Width = 264
+    ClientHeight = 216
+    ClientWidth = 264
+    TabOrder = 3
+    object Label1: TLabel
+      Left = 3
+      Height = 17
+      Top = 0
+      Width = 83
+      Caption = 'Имя таблицы:'
+      ParentColor = False
+    end
+    object new_table_name: TEdit
+      Left = 0
+      Height = 27
+      Top = 16
+      Width = 208
+      TabOrder = 0
+      TextHint = 'Имя таблицы'
+    end
+    object new_table_cols_name: TEdit
+      Left = 0
+      Height = 27
+      Top = 64
+      Width = 208
+      TabOrder = 1
+      TextHint = 'Имена ячеек'
+    end
+    object Label2: TLabel
+      Left = 0
+      Height = 17
+      Top = 48
+      Width = 169
+      Caption = 'Имена ячеек через запятую:'
+      ParentColor = False
+    end
+    object new_table_rows_count: TEdit
+      Left = 0
+      Height = 27
+      Top = 112
+      Width = 208
+      NumbersOnly = True
+      TabOrder = 2
+      TextHint = 'Кол-во строк'
+    end
+    object Label3: TLabel
+      Left = 3
+      Height = 17
+      Top = 96
+      Width = 160
+      Caption = 'Кол-во изначальных строк:'
+      ParentColor = False
+    end
+    object new_table_make_bt: TButton
+      Left = 112
+      Height = 25
+      Top = 160
+      Width = 75
+      Caption = 'Создать'
+      OnClick = new_table_make_btClick
+      TabOrder = 3
+    end
+    object new_table_close_bt: TButton
+      Left = 24
+      Height = 25
+      Top = 160
+      Width = 75
+      Caption = 'Закрыть'
+      OnClick = new_table_close_btClick
+      TabOrder = 4
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 768
+    top = 40
+    object MenuItem1: TMenuItem
+      Caption = 'Файл'
+      object menu_save: TMenuItem
+        Caption = 'Сохранить'
+        OnClick = menu_saveClick
+      end
+      object menu_load: TMenuItem
+        Caption = 'Загрузить'
+      end
+      object menu_close: TMenuItem
+        Caption = 'Открыть'
+      end
+    end
+  end
+  object SaveDialog1: TSaveDialog
+    left = 600
+    top = 40
+  end
+end
