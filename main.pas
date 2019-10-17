@@ -54,6 +54,7 @@ type
     procedure new_table_close_btClick(Sender: TObject);
     procedure new_table_make_btClick(Sender: TObject);
     procedure select_tableChange(Sender: TObject);
+    procedure StringGrid1Enter(Sender: TObject);
   private
 
   public
@@ -65,6 +66,7 @@ var
   basedata: array of array of array of string;
   gridslist: array of TStringGrid;
   gridsnames: array of string;
+  gridscount: array of array of integer;
   jsonobj: TJSONObject;
   col,row: integer;
 
@@ -75,16 +77,25 @@ implementation
 { TForm1 }
 
 procedure savebdtoarray(tableid: integer);
-var
-  i: integer;
-  str: string;
 begin
   for col:=1 to Form1.StringGrid1.ColCount-1 do
   for row:=0 to Form1.StringGrid1.RowCount-1 do
   begin
     SetLength(basedata,Form1.select_table.Items.Count,1024,1024);
-    writeln(tableid,col,row,Form1.StringGrid1.Cells[col,row]);
+    gridscount[tableid][0] := Form1.StringGrid1.ColCount;
+    gridscount[tableid][1] := Form1.StringGrid1.RowCount;
     basedata[tableid][col][row] := Form1.StringGrid1.Cells[col,row];
+  end;
+end;
+procedure loadbdfromarray(tableid: integer);
+begin
+  Form1.StringGrid1.ColCount := gridscount[tableid][0];
+  Form1.StringGrid1.RowCount := gridscount[tableid][1];
+  for col:=1 to Form1.StringGrid1.ColCount-1 do
+  for row:=0 to Form1.StringGrid1.RowCount-1 do
+  begin
+    writeln(basedata[tableid][col][row]);
+    Form1.StringGrid1.Cells[col,row] := basedata[tableid][col][row];
   end;
 end;
 
@@ -161,6 +172,9 @@ begin
   table_create_opt.Top:=96;
   table_create_opt.Hide;
   SetLength(basedata,1,1024,1024);
+  SetLength(gridscount,1,2);
+  gridscount[0][0] := 1;
+  gridscount[0][1] := 2;
 end;
 
 procedure TForm1.menu_saveClick(Sender: TObject);
@@ -180,15 +194,22 @@ var
   tmplist: array of string;
   i: integer;
 begin
+  savebdtoarray(select_table.ItemIndex);
+  Form1.StringGrid1.Clear;
   SetLength(gridsnames,Length(gridsnames)+1);
   gridsnames[Length(gridsnames)] := new_table_name.Text;
   select_table.Items.Add(new_table_name.Text);
   select_table.ItemIndex:=select_table.Items.Count-1;
   tmpstr := new_table_cols_name.Text;
-  SetLength(tmplist,4);
-  tmplist[0]:=',';tmplist[1]:=', ';tmplist[2]:=' ,';tmplist[3]:=' , ';
-  colname := tmpstr.Split(tmplist);
+  SetLength(tmplist,3);
+  tmplist[0] := ', ';tmplist[1] := ' , ';tmplist[2] := ' ,';
+  for i:=0 to Length(tmplist)-1 do
+      tmpstr := StringReplace(tmpstr,tmplist[i],',',[rfReplaceAll]);
+  colname := tmpstr.Split([',']);
   StringGrid1.ColCount:=Length(colname)+1;
+  SetLength(gridscount,select_table.Items.Count,2);
+  gridscount[select_table.Items.Count-1][0] := Length(colname);
+  gridscount[select_table.Items.Count-1][1] := strtoint(new_table_rows_count.Text);
   for i:=1 to Length(colname) do
   begin
     StringGrid1.Cells[i,0] := colname[i-1];
@@ -198,6 +219,11 @@ begin
 end;
 
 procedure TForm1.select_tableChange(Sender: TObject);
+begin
+  loadbdfromarray(select_table.ItemIndex);
+end;
+
+procedure TForm1.StringGrid1Enter(Sender: TObject);
 begin
   savebdtoarray(select_table.ItemIndex);
 end;
